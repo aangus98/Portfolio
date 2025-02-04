@@ -1,0 +1,15 @@
+body, html {
+    margin: 0;
+    padding: 0;
+    font-family: 'Arial', sans-serif;
+  }
+  
+  .marker:hover {
+    transform: scale(1.2);
+    transition: transform 0.3s ease-in-out;
+  }
+  
+  .section h1 {
+    margin-top: 0;
+  }
+  
