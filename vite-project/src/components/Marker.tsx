@@ -14,15 +14,12 @@ const Marker: React.FC<MarkerProps> = ({ label, position, onClick }) => {
         position: "absolute",
         top: position.top,
         left: position.left,
-        padding: "10px",
-        borderRadius: "50%",
-        backgroundColor: "#d4af37",
-        cursor: "pointer",
         transform: "translate(-50%, -50%)",
       }}
       onClick={onClick}
     >
-      {label}
+      <span>{label}</span>
+      <div className="pulse"></div> {/* 🔥 Animated pulse effect */}
     </div>
   );
 };
