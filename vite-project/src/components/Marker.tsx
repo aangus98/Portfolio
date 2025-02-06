@@ -15,11 +15,16 @@ const Marker: React.FC<MarkerProps> = ({ label, position, onClick }) => {
         top: position.top,
         left: position.left,
         transform: "translate(-50%, -50%)",
+        textAlign: "center",
+        cursor: "pointer",
       }}
       onClick={onClick}
     >
-      <span>{label}</span>
-      <div className="pulse"></div> {/* 🔥 Animated pulse effect */}
+      {/* Section Name Above the X */}
+      <div className="marker-label">{label}</div>
+
+      {/* Red X */}
+      <div className="marker-x">X</div>
     </div>
   );
 };

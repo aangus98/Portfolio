@@ -1,23 +1,55 @@
-import React, { useState } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import Marker from "./Marker";
 import Section from "./Section";
 import mapImage from "../assets/images/modern-world-antique-map.jpg";
+import bioImage from "../assets/images/College_Photo.jpg";
 
-const Map: React.FC = () => {
-  const [activeSection, setActiveSection] = useState<string | null>(null);
+interface MarkerData {
+    id: string;
+    label: string;
+    position: { top: string; left: string };
+  }
+  
+  const Map: React.FC = () => {
+    const [activeSection, setActiveSection] = useState<string | null>(null);
+    const svgRef = useRef<SVGPathElement | null>(null);
 
-  const markers = [
-    { id: "about", label: "About Me", position: { top: "37%", left: "25%" } },
-    { id: "projects", label: "Projects", position: { top: "20%", left: "49%" } },
-    { id: "skills", label: "Skills", position: { top: "65%", left: "35%" } },
-    { id: "links", label: "Links", position: { top: "33%", left: "86.5%" } },
-    { id: "contact", label: "Contact", position: { top: "80%", left: "90%" } },
-  ];
+    const markers = [
+      { id: "about", label: "About Me", position: { top: "15%", left: "17%" } },
+      { id: "projects", label: "Projects", position: { top: "37%", left: "24.5%" } },
+      { id: "skills", label: "Skills", position: { top: "20%", left: "50%" } },
+      { id: "links", label: "Links", position: { top: "70%", left: "40%" } },
+      { id: "contact", label: "Contact", position: { top: "30%", left: "55%" } },
+    ];
+  
+   // Define the path string for the red line
+  const pathString = `M 20% 30% L 60% 50% L 40% 70% L 80% 35% L 25% 85%`;
+
+  // Animate the line drawing
+  useEffect(() => {
+    if (svgRef.current) {
+      svgRef.current.style.strokeDasharray = `${svgRef.current.getTotalLength()}`;
+      svgRef.current.style.strokeDashoffset = `${svgRef.current.getTotalLength()}`;
+      setTimeout(() => {
+        if (svgRef.current) {
+          svgRef.current.style.transition = "stroke-dashoffset 2s ease-in-out";
+          svgRef.current.style.strokeDashoffset = "0";
+        }
+      }, 500);
+    }
+  }, []);
 
   return (
     <div className="map-container">
+      {/* Indiana Jones Map */}
       <img src={mapImage} alt="Indiana Jones Map" className="map-background" />
 
+      {/* Red Path Line */}
+      <svg className="map-overlay">
+        <path ref={svgRef} d={pathString} stroke="red" strokeWidth="3" fill="none" />
+      </svg>
+
+      {/* Markers */}
       {markers.map((marker) => (
         <Marker
           key={marker.id}
@@ -27,9 +59,13 @@ const Map: React.FC = () => {
         />
       ))}
 
+      {/* Sections */}
       <Section id="about" isActive={activeSection === "about"} onClose={() => setActiveSection(null)}>
         <h1>About Me</h1>
-        <p>Your bio goes here...</p>
+        <div className="about-section">
+            <img src={bioImage} alt="Bio" className="bio-image" />
+            <p>Your bio goes here...</p>
+        </div>
       </Section>
       <Section id="projects" isActive={activeSection === "projects"} onClose={() => setActiveSection(null)}>
         <h1>Projects</h1>

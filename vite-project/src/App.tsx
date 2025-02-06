@@ -1,21 +1,15 @@
-import React, { useState } from "react";
+import React from "react";
 import "./index.css";
 import Map from "./components/Map";
+import Header from "./components/Header";
+import Footer from "./components/Footer";
 
 const App: React.FC = () => {
-  const [darkMode, setDarkMode] = useState(false);
-
-  const toggleDarkMode = () => {
-    setDarkMode(!darkMode);
-    document.body.classList.toggle("dark-theme", !darkMode); // Toggle dark theme class
-  };
-
   return (
-    <div className={`app-container ${darkMode ? "dark" : "light"}`}>
-      <button className="theme-toggle" onClick={toggleDarkMode}>
-        {darkMode ? "🌞 Light Mode" : "🌙 Dark Mode"}
-      </button>
+    <div className="app-container">
+      <Header />
       <Map />
+      <Footer />
     </div>
   );
 };
